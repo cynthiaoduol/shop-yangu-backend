@@ -1,11 +1,12 @@
-const Product = require("../models/product");
-const { verifyTokenAndAdmin, verifyTokenAndAuthorization } = require("./verifyToken");
-
-const router = require("express").Router();
+import Product from '../models/product.js'
+import express  from 'express';
+import  verifyTokenAndAdmin from "./verifyToken.js";
+import verifyTokenAndAuthorization from "./verifyToken.js";
+const router = express.Router();
 
 
 //create a new product
-router.post("/new", async (req, res) => {
+router.post("/add_new", async (req, res) => {
     const newProduct = new Product({
         name: req.body.name,
         slug: req.body.slug,
@@ -19,7 +20,7 @@ router.post("/new", async (req, res) => {
     })
     try {
         const savedProduct = await newProduct.save()
-        console.log(newProduct)
+        // console.log(newProduct)
         res.status(201).json(savedProduct)
     }
     catch (err) {
@@ -29,7 +30,7 @@ router.post("/new", async (req, res) => {
 
 
 // update product details
-router.put("/:id", async (req, res) => {
+router.put("/update/:id", verifyTokenAndAdmin, async (req, res) => {
     try {
         const id = req.params.id
         const updates = req.body
@@ -44,20 +45,20 @@ router.put("/:id", async (req, res) => {
 
 
 // get a single product
-router.get("/:id", async (req, res) => {
+router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
     try {
         const product = await Product.findById(req.params.id)
-        res.status(200).json(others)
+        res.status(200).json(product)
     }
     catch (err) {
-        res.status(404).json(err)
+        res.status(404).json("Product not found")
 
     }
 })
 
 
 // get all products
-router.get("/", async (req, res) => {
+router.get("/", verifyTokenAndAuthorization, async (req, res) => {
     try {
         const products = await Product.find()
         res.status(200).json(products)
@@ -70,8 +71,8 @@ router.get("/", async (req, res) => {
 
 
 
-//delete a single product
-router.delete("/:id", async (req, res) => {
+//delete a product
+router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
     try {
         res.status(200).json("product deleted")
         return await Product.findByIdAndDelete(req.params.id)

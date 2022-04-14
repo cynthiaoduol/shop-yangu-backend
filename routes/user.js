@@ -40,7 +40,7 @@ router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
     try {
         const users = await User.find()
-        console.log(users)
+        // console.log(users)
         res.status(200).json(users)
     }
     catch (err) {
