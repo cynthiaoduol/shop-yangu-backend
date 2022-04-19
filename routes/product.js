@@ -16,7 +16,6 @@ router.post("/add_new", async (req, res) => {
         price: req.body.price,
         rating: req.body.rating,
         numReviews: req.body.numReviews
-
     })
     try {
         const savedProduct = await newProduct.save()

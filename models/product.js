@@ -3,7 +3,7 @@ const productSchema = mongoose.Schema(
     {
         name: { type: String, unique: true, required: true },
         slug: { type: String, unique: true, required: true },
-        image: { type: String, unique: true, required: true },
+        image: { type: Object, unique: true, required: true },
         description: { type: String, required: true },
         category: { type: String, required: true },
         price: { type: Number, required: true },
