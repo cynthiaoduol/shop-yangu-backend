@@ -44,7 +44,7 @@ router.put("/update/:id", verifyTokenAndAdmin, async (req, res) => {
 
 
 // get a single product
-router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/find/:id", async (req, res) => {
     try {
         const product = await Product.findById(req.params.id)
         res.status(200).json(product)
@@ -57,7 +57,7 @@ router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
 
 
 // get all products
-router.get("/", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const products = await Product.find()
         res.status(200).json(products)
