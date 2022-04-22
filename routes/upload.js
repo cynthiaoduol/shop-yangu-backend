@@ -11,11 +11,13 @@ cloudinary.config({
 
 router.post('/upload', (req, res) => {
     try {
+        const file=req.files.photo;
         // if (!req.file) { 
         //     res.json('Image is not presented!');
         //  }
         res.json('test upload successful')
-        console.log(req.file)
+        // res.json('test upload successful')
+        // console.log(file)
         
 
     } catch (err) {
